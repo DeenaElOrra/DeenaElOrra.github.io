@@ -1,8 +1,8 @@
-site_name: Template de Entrega
-site_author: Sandmann, H.
-site_url: https://hsandmann.github.io/documentation.template
-repo_url: https://github.com/hsandmann/documentation.template
-repo_name: github/documentation.template
+site_name: ANN & Deep Learning - Deena El Orra
+site_author: Deena El Orra
+site_url: https://deenaelorra.github.io/
+repo_url: https://github.com/DeenaElOrra/DeenaElOrra.github.io
+repo_name: DeenaElOrra/DeenaElOrra.github.io
 
 theme:
   name: material
@@ -110,7 +110,7 @@ plugins:
       enable_creation_date: true
   - git-authors
   - git-committers:
-      repository: hsandmann/documentation.template
+      repository: DeenaElOrra/DeenaElOrra.github.io
       branch: main
   - search
   - badges
@@ -141,11 +141,5 @@ extra_javascript:
 
 nav:
   - Home: index.md
-  - This documentation: ./thisdocumentation/index.md
-  - Roteiros:
-    - Roteiro 1: ./roteiro1/index.md
-    - Roteiro 2: ./roteiro2/index.md
-    - Roteiro 3: ./roteiro3/index.md
-    - Roteiro 4: ./roteiro4/index.md
-    - Notebook 1: ./notebook1/ex1_data.ipynb
-  - Projeto: ./projeto/index.md
+  - Exercises:
+    - 2. Perceptron: ./exercises/perceptron/index.md
