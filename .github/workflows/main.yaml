@@ -19,6 +19,8 @@ jobs:
 
       # Checkout source form GitHub
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       # Install Python runtime and dependencies
       - uses: actions/setup-python@v4
@@ -29,16 +31,22 @@ jobs:
       - run: |
           pip install -r requirements.txt
 
-      # regenerate the figures and numbers of the Data exercise
+      # regenerate the figures and numbers of the Data and MLP exercises
       - run: |
           python docs/exercises/data/code/data.py > /dev/null
+          python docs/exercises/mlp/code/mlp.py > /dev/null
 
-      # commit the generated figures and results back to the repository
+      # commit generated figures and results.json when they are missing or the script changed
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/exercises/data/figures docs/exercises/data/code/results.json
-          git diff --cached --quiet || (git commit -m "Data exercise: commit generated figures and results.json" && git push)
+          for ex in data mlp; do
+            d=docs/exercises/$ex
+            if [ -z "$(git ls-files $d/figures)" ] || ! git diff --quiet ${{ github.event.before }} HEAD -- $d/code/*.py 2>/dev/null; then
+              git add $d/figures $d/code/results.json
+            fi
+          done
+          git diff --cached --quiet || (git commit -m "Commit generated figures and results.json" && git pull --rebase origin main && git push)
           
       # deploy
       - run: |
