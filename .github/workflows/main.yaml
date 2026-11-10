@@ -26,23 +26,21 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
 
       # pip
       - run: |
           pip install -r requirements.txt
 
-      # regenerate the figures and numbers of the Data and MLP exercises
-      - run: |
-          python docs/exercises/data/code/data.py > /dev/null
-          python docs/exercises/mlp/code/mlp.py > /dev/null
-
-      # commit generated figures and results.json when they are missing or the script changed
+      # re-run an exercise script (and commit its figures and results.json)
+      # only when its figures are missing or its code changed in this push
       - run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for ex in data mlp; do
+          for ex in data mlp vae; do
             d=docs/exercises/$ex
             if [ -z "$(git ls-files $d/figures)" ] || ! git diff --quiet ${{ github.event.before }} HEAD -- $d/code/*.py 2>/dev/null; then
+              python $d/code/$ex.py > /dev/null
               git add $d/figures $d/code/results.json
             fi
           done
