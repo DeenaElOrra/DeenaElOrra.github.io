@@ -46,7 +46,7 @@ jobs:
               git add $d/figures $d/code/results.json
             fi
           done
-          git diff --cached --quiet || (git commit -m "Commit generated figures and results.json" && git pull --rebase origin main && git push)
+          git diff --cached --quiet || (git commit -m "Commit generated figures and results.json" && git pull --rebase --autostash origin main && git push)
           
       # deploy
       - run: |
