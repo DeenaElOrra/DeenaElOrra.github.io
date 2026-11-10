@@ -144,3 +144,4 @@ nav:
   - Exercises:
     - 1. Data: ./exercises/data/index.md
     - 2. Perceptron: ./exercises/perceptron/index.md
+    - 3. MLP: ./exercises/mlp/index.md
