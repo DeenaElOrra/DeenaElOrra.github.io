@@ -28,6 +28,10 @@ jobs:
       # pip
       - run: |
           pip install -r requirements.txt
+
+      # regenerate the figures and numbers of the Data exercise
+      - run: |
+          python docs/exercises/data/code/data.py > /dev/null
           
       # deploy
       - run: |
